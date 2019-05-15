@@ -1,7 +1,7 @@
 # **[maxcodes.io](https://www.maxcodes.io)**
 
 # NotesApp
-Provided for Students of my Notes App Udemy Course - The Notes App Course Source Code.
+Provided for Students of my swift animations  Udemy Course - The Animations Course Source Code.
 
 # courses
 As always, all of my courses have source code too! :)
