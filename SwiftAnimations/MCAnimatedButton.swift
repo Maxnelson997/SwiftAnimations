@@ -32,12 +32,21 @@ class MCAnimatedButton: UIButton {
         setTitle(title, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
 //        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateButton)))
-        addTarget(self, action: #selector(animateButton), for: .touchDown)
-        addTarget(self, action: #selector(animateButton), for: .touchUpInside)
+        addTarget(self, action: #selector(down), for: .touchDown)
+        addTarget(self, action: #selector(up), for: .touchUpInside)
     }
     
-    @objc fileprivate func animateButton() {
-        print("run this code")
+    @objc fileprivate func down() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        })
+    }
+    
+    
+    @objc fileprivate func up() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.transform = .identity
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
