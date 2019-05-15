@@ -13,15 +13,12 @@ class ViewController: UIViewController {
     let basicView = UIView()
     
     var yAnchor:NSLayoutConstraint!
-    var xAnchor:NSLayoutConstraint!
     var widthAnchor:NSLayoutConstraint!
     var heightAnchor:NSLayoutConstraint!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         basicView.backgroundColor = .blue
         basicView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,8 +27,7 @@ class ViewController: UIViewController {
         yAnchor = basicView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         yAnchor.isActive = true
         
-        xAnchor = basicView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        xAnchor.isActive = true
+        basicView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         heightAnchor = basicView.heightAnchor.constraint(equalToConstant: 200)
         heightAnchor.isActive = true
@@ -39,20 +35,16 @@ class ViewController: UIViewController {
         widthAnchor = basicView.widthAnchor.constraint(equalToConstant: 200)
         widthAnchor.isActive = true
         
-        
         perform(#selector(animateBox), with: nil, afterDelay: 1)
+        
+        basicView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateOnTap)))
         
     }
     
     @objc fileprivate func animateBox() {
-        
         yAnchor.isActive = false
         yAnchor = basicView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100)
         yAnchor.isActive = true
-        
-        //        xAnchor.isActive = false
-        //        xAnchor = basicView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
-        //        xAnchor.isActive = true
         
         widthAnchor.isActive = false
         widthAnchor = basicView.widthAnchor.constraint(equalToConstant: 300)
@@ -65,10 +57,35 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 1.5, options: .curveEaseIn, animations: {
             self.view.layoutIfNeeded()
         })
+
+    }
+    
+    var tapped:Bool = false
+    
+    @objc func animateOnTap() {
+        if tapped {
+            widthAnchor.isActive = false
+            widthAnchor = basicView.widthAnchor.constraint(equalToConstant: view.frame.width/2)
+            widthAnchor.isActive = true
+        } else {
+            yAnchor.isActive = false
+            yAnchor = basicView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200)
+            yAnchor.isActive = true
+            
+            widthAnchor.isActive = false
+            widthAnchor = basicView.widthAnchor.constraint(equalToConstant: view.frame.width - 20)
+            widthAnchor.isActive = true
+            
+            heightAnchor.isActive = false
+            heightAnchor = basicView.heightAnchor.constraint(equalToConstant: 200)
+            heightAnchor.isActive = true
+        }
         
-        //        UIView.animate(withDuration: 1) {
-        //            self.basicView.backgroundColor = .red
-        //        }
+        tapped = !tapped
+        
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 1.5, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
     
     
