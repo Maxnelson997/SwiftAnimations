@@ -24,6 +24,8 @@ class ViewController: UIViewController {
         
         button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+
 //
 //        basicView.backgroundColor = .blue
 //        basicView.translatesAutoresizingMaskIntoConstraints = false

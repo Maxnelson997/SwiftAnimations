@@ -31,6 +31,13 @@ class MCAnimatedButton: UIButton {
         backgroundColor = .blue
         setTitle(title, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+//        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateButton)))
+        addTarget(self, action: #selector(animateButton), for: .touchDown)
+        addTarget(self, action: #selector(animateButton), for: .touchUpInside)
+    }
+    
+    @objc fileprivate func animateButton() {
+        print("run this code")
     }
     
     required init?(coder aDecoder: NSCoder) {
