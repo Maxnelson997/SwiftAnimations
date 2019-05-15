@@ -16,28 +16,33 @@ class ViewController: UIViewController {
     var widthAnchor:NSLayoutConstraint!
     var heightAnchor:NSLayoutConstraint!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        basicView.backgroundColor = .blue
-        basicView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(basicView)
+        let button = MCAnimatedButton(title: "Maxcodes")
+        view.addSubview(button)
         
-        yAnchor = basicView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        yAnchor.isActive = true
-        
-        basicView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        heightAnchor = basicView.heightAnchor.constraint(equalToConstant: 200)
-        heightAnchor.isActive = true
-        
-        widthAnchor = basicView.widthAnchor.constraint(equalToConstant: 200)
-        widthAnchor.isActive = true
-        
-        perform(#selector(animateBox), with: nil, afterDelay: 1)
-        
-        basicView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateOnTap)))
+        button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//
+//        basicView.backgroundColor = .blue
+//        basicView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(basicView)
+//
+//        yAnchor = basicView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        yAnchor.isActive = true
+//
+//        basicView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//
+//        heightAnchor = basicView.heightAnchor.constraint(equalToConstant: 200)
+//        heightAnchor.isActive = true
+//
+//        widthAnchor = basicView.widthAnchor.constraint(equalToConstant: 200)
+//        widthAnchor.isActive = true
+//
+//        perform(#selector(animateBox), with: nil, afterDelay: 1)
+//
+//        basicView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateOnTap)))
         
     }
     
