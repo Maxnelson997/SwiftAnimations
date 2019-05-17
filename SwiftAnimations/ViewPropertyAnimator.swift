@@ -35,38 +35,52 @@ class ViewPropertyAnimator: UIViewController {
             self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
         }
     
-        setupCABasic()
+//        setupCABasic()
+        perform(#selector(setupCABasic), with: nil, afterDelay: 1)
         setupSlider()
     }
     
-    fileprivate func setupCABasic() {
-        let basic0 = CABasicAnimation(keyPath: "transform.scale")
-        basic0.toValue = 0.5
-        basic0.duration = 2
+    @objc fileprivate func setupCABasic() {
+//        let basic0 = CABasicAnimation(keyPath: "transform.scale")
+//        basic0.toValue = 0.5
+//        basic0.duration = 2
+//
+//        basic0.fillMode = CAMediaTimingFillMode.forwards
+//        basic0.isRemovedOnCompletion = false
+//
+//        imageView.layer.add(basic0, forKey: "maxcodes.io")
+//        blurView.layer.add(basic0, forKey: "maxcodes.io")
+//
+//        let basic1 = CABasicAnimation(keyPath: "cornerRadius")
+//        basic1.toValue = 50
+//        basic1.duration = 2
+//
+//        basic1.fillMode = CAMediaTimingFillMode.forwards
+//        basic1.isRemovedOnCompletion = false
+//
+//        imageView.layer.add(basic1, forKey: "maxcodes.io/courses")
+//        blurView.layer.add(basic1, forKey: "maxcodes.io/courses")
+//
+//        let basic2 = CABasicAnimation(keyPath: "opacity")
+//        basic2.toValue = 0
+//        basic2.duration = 2
+//
+//        basic2.fillMode = CAMediaTimingFillMode.forwards
+//        basic2.isRemovedOnCompletion = false
+//        blurView.layer.add(basic2, forKey: "maxcodes.io/books")
+//
+//
+        let springAnimation = CASpringAnimation(keyPath: "transform.scale")
         
-        basic0.fillMode = CAMediaTimingFillMode.forwards
-        basic0.isRemovedOnCompletion = false
+        springAnimation.fromValue = 0
+        springAnimation.toValue = 1
+        springAnimation.damping = 5
+        springAnimation.mass = 0
+        springAnimation.duration = 10
+
         
-        imageView.layer.add(basic0, forKey: "maxcodes.io")
-        blurView.layer.add(basic0, forKey: "maxcodes.io")
-        
-        let basic1 = CABasicAnimation(keyPath: "cornerRadius")
-        basic1.toValue = 50
-        basic1.duration = 2
-        
-        basic1.fillMode = CAMediaTimingFillMode.forwards
-        basic1.isRemovedOnCompletion = false
-        
-        imageView.layer.add(basic1, forKey: "maxcodes.io/courses")
-        blurView.layer.add(basic1, forKey: "maxcodes.io/courses")
-        
-        let basic2 = CABasicAnimation(keyPath: "opacity")
-        basic2.toValue = 0
-        basic2.duration = 2
-        
-        basic2.fillMode = CAMediaTimingFillMode.forwards
-        basic2.isRemovedOnCompletion = false
-        blurView.layer.add(basic2, forKey: "maxcodes.io/books")
+        imageView.layer.add(springAnimation, forKey: "maxcodes.ioasdf")
+        blurView.layer.add(springAnimation, forKey: "maxcodes.ioasdf")
     }
 
 
