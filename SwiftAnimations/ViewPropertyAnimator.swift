@@ -10,41 +10,37 @@ import UIKit
 
 class ViewPropertyAnimator: UIViewController {
     
-    
-    let box = UIView()
-    
-
-//    let animator = UIViewPropertyAnimator(duration: 1, curve: .linear, animations: nil)
-    var animator: UIViewPropertyAnimator!
-    var boxWidthAnchor:NSLayoutConstraint!
+    fileprivate let animator = UIViewPropertyAnimator(duration: 1, curve: .linear, animations: nil)
+    fileprivate var imageView:UIImageView = UIImageView(image: #imageLiteral(resourceName: "alex"))
+    fileprivate var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
-  
-        box.translatesAutoresizingMaskIntoConstraints = false
-        box.backgroundColor = .red
-        view.addSubview(box)
-        boxWidthAnchor = box.widthAnchor.constraint(equalToConstant: 100)
-        boxWidthAnchor.isActive = true
-        box.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        box.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        box.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        view.addSubview(imageView)
+        view.addSubview(blurView)
+        imageView.frame = view.frame
+        imageView.contentMode = .scaleAspectFill
+        blurView.frame = view.frame
         
-//        animator.addAnimations {
-//            box.backgroundColor = .blue
-//            self.view.layoutIfNeeded()
-//        }
+        self.blurView.alpha = 0.5
     
-        
-
+        animator.addAnimations {
+            self.blurView.alpha = 1
+            self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+        }
+    
+        setupSlider()
+    }
+    
+    fileprivate func setupSlider() {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(slider)
         
-        slider.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
+        slider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         slider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         slider.widthAnchor.constraint(equalToConstant: view.frame.width - 150).isActive = true
         
@@ -53,12 +49,6 @@ class ViewPropertyAnimator: UIViewController {
     
     @objc fileprivate func handleSliderChanged(slide: UISlider) {
         print(slide.value)
-        boxWidthAnchor.constant = 100 + CGFloat(slide.value * 100)
-//        animator.fractionComplete = CGFloat(slide.value)
-        animator = UIViewPropertyAnimator(duration: 2, dampingRatio: 0.5, animations: {
-            self.view.layoutIfNeeded()
-            self.box.backgroundColor = .blue
-        })
-        animator.startAnimation()
+        animator.fractionComplete = CGFloat(slide.value)
     }
 }
