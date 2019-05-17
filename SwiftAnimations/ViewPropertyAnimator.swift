@@ -13,19 +13,9 @@ class ViewPropertyAnimator: UIViewController {
     fileprivate let animator = UIViewPropertyAnimator(duration: 1, curve: .linear, animations: nil)
     fileprivate var imageView:UIImageView = UIImageView(image: #imageLiteral(resourceName: "alex"))
     fileprivate var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
-    
 
-     let box = UIView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-   
-        box.backgroundColor = .red
-        box.translatesAutoresizingMaskIntoConstraints = false
-   
-        
 
         view.backgroundColor = .white
         
@@ -37,33 +27,48 @@ class ViewPropertyAnimator: UIViewController {
         
         self.blurView.alpha = 0.5
     
+        imageView.layer.masksToBounds = true
+        blurView.layer.masksToBounds = true
+        
         animator.addAnimations {
             self.blurView.alpha = 1
             self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
         }
     
+        setupCABasic()
         setupSlider()
+    }
+    
+    fileprivate func setupCABasic() {
+        let basic0 = CABasicAnimation(keyPath: "transform.scale")
+        basic0.toValue = 0.5
+        basic0.duration = 2
         
-        view.addSubview(box)
-        box.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        box.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        box.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        box.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        basic0.fillMode = CAMediaTimingFillMode.forwards
+        basic0.isRemovedOnCompletion = false
+        
+        imageView.layer.add(basic0, forKey: "maxcodes.io")
+        blurView.layer.add(basic0, forKey: "maxcodes.io")
+        
+        let basic1 = CABasicAnimation(keyPath: "cornerRadius")
+        basic1.toValue = 50
+        basic1.duration = 2
+        
+        basic1.fillMode = CAMediaTimingFillMode.forwards
+        basic1.isRemovedOnCompletion = false
+        
+        imageView.layer.add(basic1, forKey: "maxcodes.io/courses")
+        blurView.layer.add(basic1, forKey: "maxcodes.io/courses")
+        
+        let basic2 = CABasicAnimation(keyPath: "opacity")
+        basic2.toValue = 0
+        basic2.duration = 2
+        
+        basic2.fillMode = CAMediaTimingFillMode.forwards
+        basic2.isRemovedOnCompletion = false
+        blurView.layer.add(basic2, forKey: "maxcodes.io/books")
+    }
 
-        perform(#selector(self.animateBox), with: nil, afterDelay: 1)
-    }
-    
-    @objc fileprivate func animateBox() {
-        UIView.animate(withDuration: 0.3, delay: 1, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-            var transform = CGAffineTransform.identity
-            transform = transform.scaledBy(x: 1.1, y: 1.6)
-            transform = transform.translatedBy(x: 30, y: 50)
-            transform = transform.rotated(by: 45)
-            
-            self.box.transform = transform
-        })
-    }
-    
 
     fileprivate func setupSlider() {
         let slider = UISlider()
