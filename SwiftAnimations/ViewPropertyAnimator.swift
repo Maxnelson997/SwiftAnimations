@@ -14,9 +14,19 @@ class ViewPropertyAnimator: UIViewController {
     fileprivate var imageView:UIImageView = UIImageView(image: #imageLiteral(resourceName: "alex"))
     fileprivate var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
     
+
+     let box = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+   
+        box.backgroundColor = .red
+        box.translatesAutoresizingMaskIntoConstraints = false
+   
+        
+
         view.backgroundColor = .white
         
         view.addSubview(imageView)
@@ -33,8 +43,28 @@ class ViewPropertyAnimator: UIViewController {
         }
     
         setupSlider()
+        
+        view.addSubview(box)
+        box.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        box.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        box.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        box.heightAnchor.constraint(equalToConstant: 150).isActive = true
+
+        perform(#selector(self.animateBox), with: nil, afterDelay: 1)
     }
     
+    @objc fileprivate func animateBox() {
+        UIView.animate(withDuration: 0.3, delay: 1, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            var transform = CGAffineTransform.identity
+            transform = transform.scaledBy(x: 1.1, y: 1.6)
+            transform = transform.translatedBy(x: 30, y: 50)
+            transform = transform.rotated(by: 45)
+            
+            self.box.transform = transform
+        })
+    }
+    
+
     fileprivate func setupSlider() {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
