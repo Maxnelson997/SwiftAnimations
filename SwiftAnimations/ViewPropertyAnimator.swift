@@ -35,8 +35,17 @@ class ViewPropertyAnimator: UIViewController {
             self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
         }
     
+        setupCAGradient()
         setupCABasic()
         setupSlider()
+    }
+    
+    fileprivate func setupCAGradient() {
+        let gradient = CAGradientLayer()
+        gradient.frame = blurView.frame
+        gradient.colors = [UIColor.red.cgColor, UIColor.cyan.cgColor]
+        gradient.locations = [0.1, 0.4]
+        blurView.layer.addSublayer(gradient)
     }
     
     fileprivate func setupCABasic() {
@@ -60,13 +69,13 @@ class ViewPropertyAnimator: UIViewController {
         imageView.layer.add(basic1, forKey: "maxcodes.io/courses")
         blurView.layer.add(basic1, forKey: "maxcodes.io/courses")
         
-        let basic2 = CABasicAnimation(keyPath: "opacity")
-        basic2.toValue = 0
-        basic2.duration = 2
-        
-        basic2.fillMode = CAMediaTimingFillMode.forwards
-        basic2.isRemovedOnCompletion = false
-        blurView.layer.add(basic2, forKey: "maxcodes.io/books")
+//        let basic2 = CABasicAnimation(keyPath: "opacity")
+//        basic2.toValue = 0
+//        basic2.duration = 2
+//
+//        basic2.fillMode = CAMediaTimingFillMode.forwards
+//        basic2.isRemovedOnCompletion = false
+//        blurView.layer.add(basic2, forKey: "maxcodes.io/books")
     }
 
 
