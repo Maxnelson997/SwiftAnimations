@@ -35,7 +35,7 @@ class MCAnimatedButton: UIButton {
     fileprivate func phaseTwo(title: String) {
         
         layer.cornerRadius = 12
-        backgroundColor = .blue
+        backgroundColor = .darkGray
         setTitle(title, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
 //        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateButton)))
@@ -47,8 +47,8 @@ class MCAnimatedButton: UIButton {
   
         wAnchor?.isActive = false
         hAnchor?.isActive = false
-        wAnchor?.constant = 100
-        hAnchor?.constant = 100
+        wAnchor?.constant = 150
+        hAnchor?.constant = 40
         wAnchor?.isActive = true
         hAnchor?.isActive = true
         

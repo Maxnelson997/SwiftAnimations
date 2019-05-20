@@ -14,6 +14,7 @@
 		7906B5CA228B92EE004D037E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7906B5C8228B92EE004D037E /* LaunchScreen.storyboard */; };
 		7906B5D2228CBBB1004D037E /* MCAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7906B5D1228CBBB1004D037E /* MCAnimatedButton.swift */; };
 		791172EE228E1674006FCC1D /* ViewPropertyAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791172ED228E1674006FCC1D /* ViewPropertyAnimator.swift */; };
+		79C4CCEB2293341400FB1E1B /* NotifcationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4CCEA2293341400FB1E1B /* NotifcationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7906B5CB228B92EE004D037E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7906B5D1228CBBB1004D037E /* MCAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCAnimatedButton.swift; sourceTree = "<group>"; };
 		791172ED228E1674006FCC1D /* ViewPropertyAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPropertyAnimator.swift; sourceTree = "<group>"; };
+		79C4CCEA2293341400FB1E1B /* NotifcationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				7906B5CB228B92EE004D037E /* Info.plist */,
 				7906B5D1228CBBB1004D037E /* MCAnimatedButton.swift */,
 				791172ED228E1674006FCC1D /* ViewPropertyAnimator.swift */,
+				79C4CCEA2293341400FB1E1B /* NotifcationController.swift */,
 			);
 			path = SwiftAnimations;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				791172EE228E1674006FCC1D /* ViewPropertyAnimator.swift in Sources */,
 				7906B5D2228CBBB1004D037E /* MCAnimatedButton.swift in Sources */,
 				7906B5C2228B92EC004D037E /* ViewController.swift in Sources */,
+				79C4CCEB2293341400FB1E1B /* NotifcationController.swift in Sources */,
 				7906B5C0228B92EC004D037E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
