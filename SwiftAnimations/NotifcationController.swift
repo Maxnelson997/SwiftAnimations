@@ -13,6 +13,8 @@ class NotificationController: UIViewController {
     let button = MCAnimatedButton(title: "Add To Cart")
     let notification = UIView()
     
+    var notificationBottomAnchor:NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +28,29 @@ class NotificationController: UIViewController {
         
         button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -65).isActive = true
         button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+        
+        button.addTarget(self, action: #selector(handleAddToCart), for: .touchUpInside)
+    }
+    
+    @objc fileprivate func handleAddToCart() {
+        notificationBottomAnchor.constant = -15
+//        notificationBottomAnchor.isActive = false
+//        notificationBottomAnchor = notification.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15)
+//        notificationBottomAnchor.isActive = true
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (complete) in
+            if complete {
+                self.notificationBottomAnchor.constant = 40
+//                self.notificationBottomAnchor.isActive = false
+//                self.notificationBottomAnchor = self.notification.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 40)
+//                self.notificationBottomAnchor.isActive = true
+                UIView.animate(withDuration: 0.5, delay: 1.5, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
     }
     
     fileprivate func setupNotification() {
@@ -40,7 +65,8 @@ class NotificationController: UIViewController {
         notification.translatesAutoresizingMaskIntoConstraints = false
         notification.heightAnchor.constraint(equalToConstant: 40).isActive = true
         notification.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        notification.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15).isActive = true
+        notificationBottomAnchor = notification.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 40)
+        notificationBottomAnchor.isActive = true
         
         notification.addSubview(notiLabel)
         notiLabel.leftAnchor.constraint(equalTo: notification.leftAnchor, constant: 20).isActive = true
