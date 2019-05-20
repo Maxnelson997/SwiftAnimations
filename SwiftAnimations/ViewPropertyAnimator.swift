@@ -40,10 +40,36 @@ class ViewPropertyAnimator: UIViewController {
 //        setupSlider()
 //        setupCAKeyframe()
         blurView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        perform(#selector(shakeAnimation), with: nil, afterDelay: 4)
+//        perform(#selector(shakeAnimation), with: nil, afterDelay: 4)
+        setupUIViewAnimateKeyFrame()
     }
     
- 
+    fileprivate func setupUIViewAnimateKeyFrame() {
+        let center = self.imageView.center
+        
+        UIView.animateKeyframes(withDuration: 8, delay: 0, options: .calculationModeCubic, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: {
+                self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.3, animations: {
+                self.imageView.center = CGPoint(x: center.x + 100, y: center.y + 100)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.3, animations: {
+                self.imageView.center = CGPoint(x: center.x - 100, y: center.y - 100)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.4, animations: {
+                self.imageView.center = CGPoint(x: center.x + 100, y: center.y - 100)
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3, animations: {
+                self.imageView.center = center
+            })
+        })
+    }
+    
     @objc fileprivate func shakeAnimation() {
         let animation = CAKeyframeAnimation(keyPath: "position")
         animation.values = [
