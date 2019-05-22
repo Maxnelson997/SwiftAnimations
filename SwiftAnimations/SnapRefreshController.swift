@@ -8,9 +8,18 @@
 
 import UIKit
 
+extension UIView {
+    func fetchCenter(animating: Bool) -> CGPoint {
+        if animating, let presentation = layer.presentation() {
+            return presentation.position
+        }
+        return center
+    }
+}
+
 class SnapRefreshController: UIViewController {
     
-    fileprivate let startingHeight: CGFloat = 50
+    fileprivate let startingHeight: CGFloat = 150
     fileprivate let maxDragHeight: CGFloat = 150
     fileprivate let shapeLayer: CAShapeLayer = CAShapeLayer()
     
@@ -32,16 +41,55 @@ class SnapRefreshController: UIViewController {
         rightThree
     ]
     
-    fileprivate func generatePath() {
+    fileprivate var displayLink:CADisplayLink!
+    fileprivate var animating = false {
+        didSet {
+            view.isUserInteractionEnabled = !animating
+            displayLink.isPaused = !animating
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        shapeLayer.fillColor = UIColor.darkGray.cgColor
+        view.layer.addSublayer(shapeLayer)
+        
+        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.userIsDragging)))
+        
+        setupViewPoints()
+        setupCADisplayLink()
+    }
+    
+    fileprivate func setupCADisplayLink() {
+        displayLink = CADisplayLink(target: self, selector: #selector(generatePath))
+        displayLink.add(to: RunLoop.main, forMode: RunLoop.Mode.default)
+    }
+    
+    fileprivate func setupViewPoints() {
+        views.forEach { (layoutViewPoint) in
+            layoutViewPoint.frame = CGRect(x: 0, y: 0, width: 4, height: 4)
+//            layoutViewPoint.backgroundColor = .cyan
+            view.addSubview(layoutViewPoint)
+        }
+        
+        layoutViewPoints(minHeight: startingHeight, dragY: 0, dragX: view.frame.width/2)
+        generatePath()
+    }
+    
+    
+    @objc fileprivate func generatePath() {
         let screenWidth = view.frame.width
         
-        let leftThreeCenter = leftThree.center
-        let leftTwoCenter = leftTwo.center
-        let leftOneCenter = leftOne.center
-        let centerZeroCenter = centerZero.center
-        let rightOneCenter = rightOne.center
-        let rightTwoCenter = rightTwo.center
-        let rightThreeCenter = rightThree.center
+        let leftThreeCenter = leftThree.fetchCenter(animating: animating)
+        let leftTwoCenter = leftTwo.fetchCenter(animating: animating)
+        let leftOneCenter = leftOne.fetchCenter(animating: animating)
+        let centerZeroCenter = centerZero.fetchCenter(animating: animating)
+        let rightOneCenter = rightOne.fetchCenter(animating: animating)
+        let rightTwoCenter = rightTwo.fetchCenter(animating: animating)
+        let rightThreeCenter = rightThree.fetchCenter(animating: animating)
         
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: 0, y: 0))
@@ -70,36 +118,21 @@ class SnapRefreshController: UIViewController {
         rightThree.center = CGPoint(x: maxX, y: minHeight)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        shapeLayer.fillColor = UIColor.darkGray.cgColor
-        view.layer.addSublayer(shapeLayer)
-        
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.userIsDragging)))
-        
-        setupViewPoints()
-        
-    }
-    
-    fileprivate func setupViewPoints() {
-        views.forEach { (layoutViewPoint) in
-            layoutViewPoint.frame = CGRect(x: 0, y: 0, width: 4, height: 4)
-            layoutViewPoint.backgroundColor = .cyan
-            view.addSubview(layoutViewPoint)
-        }
-        
-        layoutViewPoints(minHeight: startingHeight, dragY: 0, dragX: view.frame.width/2)
-        generatePath()
-    }
-    
+  
     @objc fileprivate func userIsDragging(gesture: UIPanGestureRecognizer) {
         if gesture.state == .ended
             || gesture.state == .failed
             || gesture.state == .cancelled {
-            
+            animating = true
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                self.views.forEach({ (view) in
+                    view.center.y = self.startingHeight
+                })
+            }) { (complete) in
+                if complete {
+                    self.animating = false
+                }
+            }
         } else {
             //            shapeLayer.frame.size.height = startingHeight + gesture.translation(in: self.view).y
             let dragHeight = gesture.translation(in: view).y
