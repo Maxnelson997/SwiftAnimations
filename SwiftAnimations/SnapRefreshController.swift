@@ -58,34 +58,41 @@ class SnapRefreshController: UIViewController {
         let minX: CGFloat = 0
         let maxX: CGFloat = view.frame.width
         
+        let leftPart = dragX - minX
+        let rightPart = maxX - dragX
+        
         leftThree.center = CGPoint(x: minX, y: minHeight)
-        leftTwo.center = CGPoint(x: minX, y: minHeight + dragY)
-        leftOne.center = CGPoint(x: minX, y: minHeight)
-        centerZero.center = CGPoint(x: dragX, y: minHeight + dragY * 2)
-        rightOne.center = CGPoint(x: maxX, y: minHeight)
-        rightTwo.center = CGPoint(x: maxX, y: minHeight + dragY)
+        leftTwo.center = CGPoint(x: minX + (leftPart * 0.44), y: minHeight)
+        leftOne.center = CGPoint(x: minX + (leftPart * 0.71), y: minHeight + (dragY * 0.64))
+        centerZero.center = CGPoint(x: dragX, y: minHeight + (dragY * 1.36))
+        rightOne.center = CGPoint(x: maxX - (rightPart * 0.71), y: minHeight + (dragY * 0.64))
+        rightTwo.center = CGPoint(x: maxX - (rightPart * 0.44), y: minHeight)
         rightThree.center = CGPoint(x: maxX, y: minHeight)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        views.forEach { (layoutViewPoint) in
-            layoutViewPoint.frame = CGRect(x: 0, y: 0, width: 4, height: 4)
-            layoutViewPoint.backgroundColor = .cyan
-            view.addSubview(layoutViewPoint)
-        }
-        
-        layoutViewPoints(minHeight: startingHeight, dragY: 100, dragX: view.frame.width/2)
-        generatePath()
-        
+        view.backgroundColor = .white
         
         shapeLayer.fillColor = UIColor.darkGray.cgColor
         view.layer.addSublayer(shapeLayer)
         
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.userIsDragging)))
         
+        setupViewPoints()
+        
+    }
+    
+    fileprivate func setupViewPoints() {
+        views.forEach { (layoutViewPoint) in
+            layoutViewPoint.frame = CGRect(x: 0, y: 0, width: 4, height: 4)
+            layoutViewPoint.backgroundColor = .cyan
+            view.addSubview(layoutViewPoint)
+        }
+        
+        layoutViewPoints(minHeight: startingHeight, dragY: 0, dragX: view.frame.width/2)
+        generatePath()
     }
     
     @objc fileprivate func userIsDragging(gesture: UIPanGestureRecognizer) {
